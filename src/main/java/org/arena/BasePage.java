@@ -1,4 +1,4 @@
-package org.example;
+package org.arena;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,17 +14,25 @@ public class BasePage {
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
+        // Global explicit wait for stability
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+    // Standard synchronized click
     public void clickElement(By locator) {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
-    // Use this to bypass overlapping elements/overlays [cite: 33]
+
+    // JavaScript click to bypass overlapping containers or logs
     public void clickElementJS(By locator) {
         WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+    }
+
+    public void enterText(By locator, String text) {
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        element.clear();
+        element.sendKeys(text);
     }
 }

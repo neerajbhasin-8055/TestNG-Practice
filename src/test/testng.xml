@@ -1,0 +1,30 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="Ultimate Arena Suite" verbose="1">
+
+    <listeners>
+        <listener class-name="org.arena.utils.CustomListener" />
+    </listeners>
+
+    <test name="Regression Execution">
+        <groups>
+            <run>
+                <include name="regression" />
+                <exclude name="negative" />
+            </run>
+        </groups>
+        <classes>
+            <class name="org.arenatest.ArenaTest"/>
+        </classes>
+    </test>
+
+    <test name="Negative Failure Execution">
+        <groups>
+            <run>
+                <include name="negative" />
+            </run>
+        </groups>
+        <classes>
+            <class name="org.arenatest.ArenaTest"/>
+        </classes>
+    </test>
+</suite>
